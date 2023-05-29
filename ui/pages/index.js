@@ -8,16 +8,16 @@ const Map = dynamic(() => import("../components/Map"), {ssr: false});
 
 export default function Home() {
     return (<div>
-            <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <title>Create Next App</title>
-                <link rel="icon" href="/favicon.ico"/>
-            </Head>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>Create Next App</title>
+            <link rel="icon" href="/favicon.ico"/>
+        </Head>
 
-            <main>
-                <Header title="Map Application"/>
-                <Map/>
-                <Footer content="Copyright &copy; Selcuk SERT | 2023"/>
-            </main>
-        </div>)
+        <main>
+            <Header title="Map Application"/>
+            <Map latitude="38.9637451171875" longitude="35.24332046508789"/>
+            <Footer content="Copyright &copy; Selcuk SERT | 2023"/>
+        </main>
+    </div>)
 }

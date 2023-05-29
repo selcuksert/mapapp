@@ -3,7 +3,7 @@ import L from 'leaflet'
 import styles from '../styles/Map.module.css';
 import {useEffect, useRef} from 'react';
 
-export default function Map() {
+export default function Map({latitude, longitude}) {
 
     const locationMap = useRef(null);
 
@@ -18,7 +18,7 @@ export default function Map() {
         let map = L.map(locationMap.current, {
             draggable: true,
             dragging: true
-        }).setView([38.9637451171875, 35.24332046508789], 7);
+        }).setView([latitude, longitude], 7);
 
         L.tileLayer('http://{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}',{
             maxZoom: 10,
