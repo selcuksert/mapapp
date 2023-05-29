@@ -2,10 +2,12 @@ import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("../components/Map"), {ssr: false});
 
 export default function Home() {
-    return (
-        <div>
+    return (<div>
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <title>Create Next App</title>
@@ -14,8 +16,8 @@ export default function Home() {
 
             <main>
                 <Header title="Map Application"/>
+                <Map/>
                 <Footer content="Copyright &copy; Selcuk SERT | 2023"/>
             </main>
-        </div>
-    )
+        </div>)
 }
