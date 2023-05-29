@@ -18,7 +18,7 @@ export default function Map() {
         let map = L.map(locationMap.current, {
             draggable: true,
             dragging: true
-        }).setView([39.9348, 36.8527], 7);
+        }).setView([38.9637451171875, 35.24332046508789], 7);
 
         L.tileLayer('http://{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}',{
             maxZoom: 10,
