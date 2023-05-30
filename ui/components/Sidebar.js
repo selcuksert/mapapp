@@ -7,8 +7,9 @@ import {useContext, useEffect} from 'react';
 import {MapContext} from '../pages/index';
 import LifeExpect from "./stats/LifeExpect";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPersonPregnant, faBars} from '@fortawesome/free-solid-svg-icons';
+import {faPersonPregnant, faBars, faGear} from '@fortawesome/free-solid-svg-icons';
 import Home from "./stats/Home";
+import Settings from "./stats/Settings";
 
 export default function Sidebar() {
 
@@ -26,7 +27,7 @@ export default function Sidebar() {
                         <li><a href={"#home"} role="tab">
                             <FontAwesomeIcon icon={faBars}/>
                         </a></li>
-                        <li><a href={"#profile"} role="tab">
+                        <li><a href={"#expectlife"} role="tab">
                             <FontAwesomeIcon icon={faPersonPregnant}/>
                         </a>
                         </li>
@@ -35,7 +36,9 @@ export default function Sidebar() {
                     </ul>
 
                     <ul role="tablist">
-                        <li><a href={"#settings"} role="tab"><i className="fa fa-gear"></i></a></li>
+                        <li><a href={"#settings"} role="tab">
+                            <FontAwesomeIcon icon={faGear}/>
+                        </a></li>
                     </ul>
                 </div>
                 <div className="sidebar-content">
@@ -43,13 +46,12 @@ export default function Sidebar() {
                         <Home/>
                     </div>
 
-                    <div className="sidebar-pane" id="profile">
+                    <div className="sidebar-pane" id="expectlife">
                         <LifeExpect/>
                     </div>
 
                     <div className="sidebar-pane" id="settings">
-                        <h1 className="sidebar-header">Settings<span className="sidebar-close"><i
-                            className="fa fa-caret-left"></i></span></h1>
+                        <Settings/>
                     </div>
                 </div>
             </div>

@@ -13,9 +13,11 @@ export default function Home() {
 
             <div className="mt-2">
                 <p>This application provides population statistics based on <a
-                    href="https://www.un.org/development/desa/pd/">UN Population Division</a> data.</p>
+                    href="https://www.un.org/development/desa/pd/" target={"_blank"}>UN Population Division</a> data.
+                </p>
 
-                <p>It consumes <a href="https://population.un.org/dataportalapi/index.html">API endpoints</a> exposed by
+                <p>It consumes <a href="https://population.un.org/dataportalapi/index.html" target={"_blank"}>API
+                    endpoints</a> exposed by
                     UNPD, and displays graphics on map based on processed data.</p>
             </div>
         </>
