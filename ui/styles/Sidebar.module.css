@@ -1,0 +1,13 @@
+.centered {
+    height: 92vh;
+    top: auto;
+    bottom: auto;
+}
+
+@media screen and (max-height: 1000px) {
+    .centered {
+        height: 90vh;
+        top: auto;
+        bottom: auto;
+    }
+}

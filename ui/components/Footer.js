@@ -1,4 +1,5 @@
 import styles from '../styles/Footer.module.css';
+import 'leaflet/dist/leaflet.css';
 
 export default function Footer({content}) {
     return (
