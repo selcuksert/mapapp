@@ -8,6 +8,6 @@ public class Location {
     private String name;
     private String iso3;
     private String iso2;
-    private double longitude;
-    private double latitude;
+    private Double longitude;
+    private Double latitude;
 }

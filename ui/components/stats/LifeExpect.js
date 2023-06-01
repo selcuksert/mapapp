@@ -22,13 +22,11 @@ export default function LifeExpect() {
     const getLocations = () => {
         const url = process.env.NEXT_PUBLIC_LOCATIONS_API_URL;
         setLoading(true);
-        fetch(url)
+        fetch(`${url}?sort=name`)
             .then(response => response.json())
             .then(json => {
                 setLocations(json);
                 setLoading(false);
-                addCircle();
-
             })
             .catch(e => console.error("error", e));
     };

@@ -8,6 +8,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.reactive.RestQuery;
 
 @Path("/location")
 public class LocationResource {
@@ -17,7 +18,7 @@ public class LocationResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Multi<Location> locations() {
-        return locationService.getLocations(false, "id", "json");
+    public Multi<Location> locations(@RestQuery String sort) {
+        return locationService.getLocations(false, sort, "json");
     }
 }
