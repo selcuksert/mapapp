@@ -24,7 +24,7 @@ public class LocationService {
                 .uni(AtomicInteger::new, page -> locationAPI.getLocations(page.incrementAndGet(), pagingInHeader, sort, format))
                 .until(Objects::isNull).onFailure().recoverWithCompletion();
 
-        // Sort according to location name
+        // Filter locations with GeoPoint
         return multi.onItem()
                 .transformToMultiAndConcatenate(l ->
                         Multi.createFrom().iterable(l.getData().stream()
