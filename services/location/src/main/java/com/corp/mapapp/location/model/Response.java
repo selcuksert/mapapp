@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Locations {
+public class Response {
     private int pageNumber;
     private int pageSize;
     private String previousPage;

@@ -7,9 +7,10 @@ import {useContext, useEffect} from 'react';
 import {MapStateContext} from '../pages/index';
 import LifeExpect from "./stats/LifeExpect";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBars, faGear, faPersonPregnant} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faGear, faPeopleGroup, faPersonPregnant} from '@fortawesome/free-solid-svg-icons';
 import Home from "./stats/Home";
 import Settings from "./stats/Settings";
+import Population from "./stats/Population";
 
 export default function Sidebar() {
 
@@ -34,6 +35,11 @@ export default function Sidebar() {
                                 <FontAwesomeIcon icon={faPersonPregnant}/>
                             </a>
                         </li>
+                        <li>
+                            <a href={"#population"} role="tab">
+                                <FontAwesomeIcon icon={faPeopleGroup}/>
+                            </a>
+                        </li>
                     </ul>
 
                     <ul role="tablist">
@@ -49,6 +55,10 @@ export default function Sidebar() {
 
                     <div className="sidebar-pane" id="expectlife">
                         <LifeExpect/>
+                    </div>
+
+                    <div className="sidebar-pane" id="population">
+                        <Population/>
                     </div>
 
                     <div className="sidebar-pane" id="settings">

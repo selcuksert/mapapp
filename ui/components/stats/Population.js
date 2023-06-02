@@ -4,23 +4,27 @@ import {useContext, useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 
-export default function LifeExpect() {
+export default function Population() {
     const map = useContext(MapStateContext);
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [layers, setLayers] = useState([]);
     const [location, setLocation] = useState(0);
 
-    const addCircle = (lat, lon, value) => {
+    const formatNumber = (num) => {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    }
+
+    const addCircle = (lat, lon, indicator, value) => {
         let circle = L.circle([lat, lon], {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: value * 1000
+            radius: value / 500
         })
 
         let tooltip = L.tooltip([lat, lon], {
-            content: `Expectation: ${value} years`,
+            content: `${indicator}: ${formatNumber(value)}`,
             permanent: true
         })
 
@@ -53,7 +57,7 @@ export default function LifeExpect() {
     };
 
     const locationSelectHandler = (e) => {
-        let url = process.env.NEXT_PUBLIC_LIFEXP_API_URL;
+        let url = process.env.NEXT_PUBLIC_POPULATION_API_URL;
         let locationCode = parseInt(e.target.value);
         setLocation(locationCode);
         if (locationCode === 0) {
@@ -63,14 +67,14 @@ export default function LifeExpect() {
         fetch(`${url}?startYear=2023&endYear=2023&format=json&location=${locationCode}&sexes=3&variants=4`)
             .then(response => response.json())
             .then(json => {
-                let lifeExp = json;
+                let population = json;
                 let location = locations.filter(loc => {
                     if (loc.id === locationCode) {
                         return loc;
                     }
                 });
                 let locationObj = location[0];
-                addCircle(locationObj.latitude, locationObj.longitude, lifeExp.value);
+                addCircle(locationObj.latitude, locationObj.longitude, population.indicatorDisplayName, population.value);
                 setLoading(false);
             })
             .catch(e => console.error("error", e));
@@ -82,7 +86,7 @@ export default function LifeExpect() {
 
     return (
         <>
-            <h1 className="sidebar-header">Life Expectancy at Birth<span className="sidebar-close">
+            <h1 className="sidebar-header">Population<span className="sidebar-close">
                 <FontAwesomeIcon icon={faCaretLeft}/></span>
             </h1>
             <div className="container mt-lg-2">

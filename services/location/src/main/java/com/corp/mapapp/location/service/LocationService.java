@@ -2,7 +2,7 @@ package com.corp.mapapp.location.service;
 
 import com.corp.mapapp.location.client.LocationAPI;
 import com.corp.mapapp.location.model.Location;
-import com.corp.mapapp.location.model.Locations;
+import com.corp.mapapp.location.model.Response;
 import io.smallrye.mutiny.Multi;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -19,7 +19,7 @@ public class LocationService {
     LocationAPI locationAPI;
 
     public Multi<Location> getLocations(boolean pagingInHeader, String sort, String format) {
-        Multi<Locations> multi = Multi.createBy()
+        Multi<Response> multi = Multi.createBy()
                 .repeating()
                 .uni(AtomicInteger::new, page -> locationAPI.getLocations(page.incrementAndGet(), pagingInHeader, sort, format))
                 .until(Objects::isNull).onFailure().recoverWithCompletion();
