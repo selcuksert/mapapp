@@ -1,11 +1,11 @@
-import {MapContext} from "../../pages";
+import {MapStateContext} from "../../pages";
 import L from "leaflet";
 import {useContext, useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 
 export default function LifeExpect() {
-    const {map,} = useContext(MapContext);
+    const map = useContext(MapStateContext);
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [layers, setLayers] = useState([]);

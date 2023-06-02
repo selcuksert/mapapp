@@ -6,10 +6,11 @@ import dynamic from "next/dynamic";
 import {createContext, useEffect, useState} from "react";
 
 // Disable SSR as LeafletJS requires client side window object
-const MapComponent = dynamic(() => import("../components/Map"), {ssr: false});
+const MapComponent = dynamic(() => import("../components/LeafletMap"), {ssr: false});
 const Sidebar = dynamic(() => import("../components/Sidebar"), {ssr: false});
 
-export const MapContext = createContext(null);
+export const MapStateContext = createContext(null);
+export const MapUpdateContext = createContext(null);
 
 export default function Home() {
     const [map, setMap] = useState(null);
@@ -27,12 +28,15 @@ export default function Home() {
 
         <Header title={process.env.NEXT_PUBLIC_PAGE_TITLE}/>
 
-        <MapContext.Provider value={{map, setMap}}>
-            <main>
-                <Sidebar/>
-                <MapComponent latitude="38.9637451171875" longitude="35.24332046508789"/>
-            </main>
-            <Footer content="Copyright &copy; Selcuk SERT | 2023"/>
-        </MapContext.Provider>
+        <MapUpdateContext.Provider value={setMap}>
+            <MapStateContext.Provider value={map}>
+                <main>
+                    <Sidebar/>
+                    <MapComponent latitude="38.9637451171875" longitude="35.24332046508789"/>
+                </main>
+                <Footer content={`Copyright &copy; ${process.env.NEXT_PUBLIC_COPYRIGHT} | 2023`}/>
+            </MapStateContext.Provider>
+        </MapUpdateContext.Provider>
+
     </div>)
 }

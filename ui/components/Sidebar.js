@@ -4,7 +4,7 @@ import L from 'leaflet'
 import 'sidebar-v2/js/leaflet-sidebar';
 import styles from '../styles/Sidebar.module.css';
 import {useContext, useEffect} from 'react';
-import {MapContext} from '../pages/index';
+import {MapStateContext} from '../pages/index';
 import LifeExpect from "./stats/LifeExpect";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBars, faGear, faPersonPregnant} from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +13,7 @@ import Settings from "./stats/Settings";
 
 export default function Sidebar() {
 
-    const {map,} = useContext(MapContext);
+    const map = useContext(MapStateContext);
 
     useEffect(() => {
         L.control.sidebar('sidebar').addTo(map);

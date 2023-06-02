@@ -3,13 +3,13 @@ import 'sidebar-v2/css/leaflet-sidebar.min.css'
 import L from 'leaflet'
 import styles from '../styles/Map.module.css';
 import {useContext, useEffect, useRef} from 'react';
-import {MapContext} from '../pages/index';
+import {MapUpdateContext} from '../pages/index';
 
-export default function Map({latitude, longitude}) {
+export default function LeafletMap({latitude, longitude}) {
 
     const locationMap = useRef(null);
 
-    const {map, setMap} = useContext(MapContext);
+    const setMap = useContext(MapUpdateContext);
 
     useEffect(() => {
 
@@ -27,7 +27,7 @@ export default function Map({latitude, longitude}) {
         L.tileLayer('http://{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
             maxZoom: 10,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-            attribution: `Map Data &copy; <a href="https://www.google.com/">${new Date().getFullYear()} Google</a>`
+            attribution: `Map Data &copy; ${new Date().getFullYear()} ${process.env.NEXT_PUBLIC_MAP_ATTRIBUTION}`
         }).addTo(map);
 
         setMap(map);
