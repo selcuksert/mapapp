@@ -8,19 +8,31 @@ export default function LifeExpect() {
     const {map,} = useContext(MapContext);
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [layers, setLayers] = useState([]);
+    const [location, setLocation] = useState(0);
 
-    // https://population.un.org/dataportalapi/api/v1/data/indicators/61/locations/792?startYear=2023&endYear=2023&variants=4&sexes=3&pagingInHeader=false&format=json
     const addCircle = (lat, lon, value) => {
-        L.circle([lat, lon], {
+        let circle = L.circle([lat, lon], {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
             radius: value * 1000
-        }).addTo(map);
-        L.tooltip([lat, lon], {
+        })
+
+        let tooltip = L.tooltip([lat, lon], {
             content: `Expectation: ${value} years`,
             permanent: true
-        }).addTo(map);
+        })
+
+        let layerGroup = L.layerGroup([circle, tooltip]).addTo(map);
+        setLayers(layers => [...layers, layerGroup]);
+    };
+
+    const clearMap = () => {
+        if (layers.length > 0) {
+            layers.forEach(layerGroup => layerGroup.clearLayers());
+        }
+        setLocation(0);
     };
 
     const getLocations = () => {
@@ -35,9 +47,10 @@ export default function LifeExpect() {
             .catch(e => console.error("error", e));
     };
 
-    const drawResult = (e) => {
+    const locationSelectHandler = (e) => {
         let url = process.env.NEXT_PUBLIC_LIFEXP_API_URL;
         let locationCode = parseInt(e.target.value);
+        setLocation(locationCode);
         if (locationCode === 0) {
             return;
         }
@@ -70,13 +83,17 @@ export default function LifeExpect() {
             <div className="container mt-lg-2">
                 <div className="row">
                     <select disabled={loading} className="form-select text-bg-dark bg-primary"
-                            onChange={drawResult}
+                            onChange={locationSelectHandler}
+                            value={location}
                             aria-label="Default select example">
                         <option value="0">{loading ? `Loading...` : `Select location`}</option>
                         {locations.map((location) => (
                             <option key={location.id} value={location.id}>{location.name}</option>
                         ))}
                     </select>
+                </div>
+                <div className="row mt-2">
+                    <button className="btn btn-secondary" type="button" onClick={clearMap}>Clear</button>
                 </div>
             </div>
         </>

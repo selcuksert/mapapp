@@ -7,7 +7,7 @@ import {useContext, useEffect} from 'react';
 import {MapContext} from '../pages/index';
 import LifeExpect from "./stats/LifeExpect";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPersonPregnant, faBars, faGear} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faGear, faPersonPregnant} from '@fortawesome/free-solid-svg-icons';
 import Home from "./stats/Home";
 import Settings from "./stats/Settings";
 
@@ -24,15 +24,16 @@ export default function Sidebar() {
             <div id="sidebar" className={`sidebar collapsed ${styles.centered}`}>
                 <div className="sidebar-tabs">
                     <ul role="tablist">
-                        <li><a href={"#home"} role="tab">
-                            <FontAwesomeIcon icon={faBars}/>
-                        </a></li>
-                        <li><a href={"#expectlife"} role="tab">
-                            <FontAwesomeIcon icon={faPersonPregnant}/>
-                        </a>
+                        <li>
+                            <a href={"#home"} role="tab">
+                                <FontAwesomeIcon icon={faBars}/>
+                            </a>
                         </li>
-                        <li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i
-                            className="fa fa-github"></i></a></li>
+                        <li>
+                            <a href={"#expectlife"} role="tab">
+                                <FontAwesomeIcon icon={faPersonPregnant}/>
+                            </a>
+                        </li>
                     </ul>
 
                     <ul role="tablist">
