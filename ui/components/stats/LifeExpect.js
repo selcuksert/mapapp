@@ -26,6 +26,11 @@ export default function LifeExpect() {
 
         let layerGroup = L.layerGroup([circle, tooltip]).addTo(map);
         setLayers(layers => [...layers, layerGroup]);
+        map.flyTo([lat, lon], 5, {
+            animate: true,
+            duration: 0.8,
+            easeLinearity: 0.5
+        })
     };
 
     const clearMap = () => {
