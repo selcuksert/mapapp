@@ -14,7 +14,6 @@ export const MapUpdateContext = createContext(null);
 
 export default function Home() {
     const [map, setMap] = useState(null);
-    const copyright = String.fromCodePoint(0x00A9);
 
     useEffect(() => {
         require("bootstrap/dist/js/bootstrap.bundle.min");
@@ -35,7 +34,7 @@ export default function Home() {
                     <Sidebar/>
                     <MapComponent latitude="38.9637451171875" longitude="35.24332046508789"/>
                 </main>
-                <Footer content={`Copyright ${copyright} ${process.env.NEXT_PUBLIC_COPYRIGHT} | 2023`}/>
+                <Footer copyrightText={process.env.NEXT_PUBLIC_COPYRIGHT}/>
             </MapStateContext.Provider>
         </MapUpdateContext.Provider>
 
