@@ -4,6 +4,13 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import dynamic from "next/dynamic";
 import {createContext, useEffect, useState} from "react";
+// The following import prevents a Font Awesome icon server-side rendering bug,
+// where the icons flash from a very large icon down to a properly sized one:
+import '@fortawesome/fontawesome-svg-core/styles.css';
+// Prevent fontawesome from adding its CSS since we did it manually above:
+import {config} from '@fortawesome/fontawesome-svg-core';
+
+config.autoAddCss = false; /* eslint-disable import/first */
 
 // Disable SSR as LeafletJS requires client side window object
 const MapComponent = dynamic(() => import("../components/LeafletMap"), {ssr: false});

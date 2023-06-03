@@ -1,7 +1,7 @@
 .centered {
     height: 92vh;
-    top: auto;
-    bottom: auto;
+    top: auto!important;
+    bottom: auto!important;
 }
 
 @media screen and (max-height: 1000px) {

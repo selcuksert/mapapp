@@ -1,7 +1,7 @@
 import styles from '../styles/Footer.module.css';
 import 'leaflet/dist/leaflet.css';
 import moment from "moment";
-import {version} from "../public/version"
+import {version} from "../version"
 
 export default function Footer({copyrightText}) {
     const copyright = String.fromCodePoint(0x00A9);
