@@ -7,7 +7,13 @@ import {createContext, useContext, useEffect, useState} from 'react';
 import {MapStateContext} from '../pages/index';
 import LifeExpect from "./stats/LifeExpect";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBars, faGear, faPeopleGroup, faPersonPregnant} from '@fortawesome/free-solid-svg-icons';
+import {
+    faBars,
+    faBirthdayCake,
+    faGear,
+    faPeopleGroup,
+    faPersonWalkingDashedLineArrowRight
+} from '@fortawesome/free-solid-svg-icons';
 import Home from "./stats/Home";
 import Settings from "./stats/Settings";
 import Population from "./stats/Population";
@@ -51,7 +57,7 @@ export default function Sidebar() {
                             </li>
                             <li>
                                 <a href={"#expectlife"} role="tab">
-                                    <FontAwesomeIcon icon={faPersonPregnant}/>
+                                    <FontAwesomeIcon icon={faPersonWalkingDashedLineArrowRight}/>
                                 </a>
                             </li>
                             <li>
@@ -61,7 +67,7 @@ export default function Sidebar() {
                             </li>
                             <li>
                                 <a href={"#medage"} role="tab">
-                                    <FontAwesomeIcon icon={faPeopleGroup}/>
+                                    <FontAwesomeIcon icon={faBirthdayCake}/>
                                 </a>
                             </li>
                         </ul>
