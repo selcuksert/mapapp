@@ -12,12 +12,14 @@ import {
     faBirthdayCake,
     faGear,
     faPeopleGroup,
-    faPersonWalkingDashedLineArrowRight
+    faPersonWalkingDashedLineArrowRight,
+    faRing
 } from '@fortawesome/free-solid-svg-icons';
 import Home from "./stats/Home";
 import Settings from "./stats/Settings";
 import Population from "./stats/Population";
 import MedianAge from "./stats/MedianAge";
+import Married from "./stats/Married";
 
 export const LocationsContext = createContext({"loading": true, data: []});
 
@@ -70,6 +72,11 @@ export default function Sidebar() {
                                     <FontAwesomeIcon icon={faBirthdayCake}/>
                                 </a>
                             </li>
+                            <li>
+                                <a href={"#married"} role="tab">
+                                    <FontAwesomeIcon icon={faRing}/>
+                                </a>
+                            </li>
                         </ul>
 
                         <ul role="tablist">
@@ -82,19 +89,18 @@ export default function Sidebar() {
                         <div className="sidebar-pane" id="home">
                             <Home/>
                         </div>
-
                         <div className="sidebar-pane" id="expectlife">
                             <LifeExpect/>
                         </div>
-
                         <div className="sidebar-pane" id="population">
                             <Population/>
                         </div>
-
                         <div className="sidebar-pane" id="medage">
                             <MedianAge/>
                         </div>
-
+                        <div className="sidebar-pane" id="married">
+                            <Married/>
+                        </div>
                         <div className="sidebar-pane" id="settings">
                             <Settings/>
                         </div>

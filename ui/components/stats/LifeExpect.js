@@ -13,11 +13,13 @@ export default function LifeExpect() {
     const locations = useContext(LocationsContext);
 
     const addCircle = (lat, lon, indicator, value) => {
+        let MAX_VALUE = 100;
+        let MAX_RADIUS = 250_000;
         let circle = L.circle([lat, lon], {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: value * 1000
+            radius: (value / MAX_VALUE) * MAX_RADIUS
         })
 
         let tooltip = L.tooltip([lat, lon], {

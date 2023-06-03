@@ -17,11 +17,13 @@ export default function MedianAge() {
     }
 
     const addCircle = (lat, lon, indicator, value) => {
+        let MAX_VALUE = 100;
+        let MAX_RADIUS = 250_000;
         let circle = L.circle([lat, lon], {
             color: 'red',
             fillColor: '#707BE7',
             fillOpacity: 0.5,
-            radius: value * 5000
+            radius: (value / MAX_VALUE) * MAX_RADIUS
         })
 
         let tooltip = L.tooltip([lat, lon], {
