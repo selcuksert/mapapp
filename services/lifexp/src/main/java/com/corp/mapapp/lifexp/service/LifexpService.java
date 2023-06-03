@@ -1,6 +1,7 @@
 package com.corp.mapapp.lifexp.service;
 
 import com.corp.mapapp.lifexp.client.LifexpAPI;
+import com.corp.mapapp.lifexp.config.AppConfiguration;
 import com.corp.mapapp.lifexp.model.LifeExpectation;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,10 +15,13 @@ public class LifexpService {
     @RestClient
     LifexpAPI lifexpAPI;
 
+    @Inject
+    AppConfiguration appConfiguration;
+
     public Uni<LifeExpectation> getLifeExpectation(String location, boolean pagingInHeader,
                                                    String format, String startYear, String endYear,
                                                    String variants, String sexes) {
-        String indicator = "61";
+        String indicator = appConfiguration.dataportal().indicator();
 
         return lifexpAPI.getLifeExpectation(
                 indicator,

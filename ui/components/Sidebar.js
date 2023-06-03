@@ -11,6 +11,7 @@ import {faBars, faGear, faPeopleGroup, faPersonPregnant} from '@fortawesome/free
 import Home from "./stats/Home";
 import Settings from "./stats/Settings";
 import Population from "./stats/Population";
+import MedianAge from "./stats/MedianAge";
 
 export const LocationsContext = createContext({"loading": true, data: []});
 
@@ -58,6 +59,11 @@ export default function Sidebar() {
                                     <FontAwesomeIcon icon={faPeopleGroup}/>
                                 </a>
                             </li>
+                            <li>
+                                <a href={"#medage"} role="tab">
+                                    <FontAwesomeIcon icon={faPeopleGroup}/>
+                                </a>
+                            </li>
                         </ul>
 
                         <ul role="tablist">
@@ -77,6 +83,10 @@ export default function Sidebar() {
 
                         <div className="sidebar-pane" id="population">
                             <Population/>
+                        </div>
+
+                        <div className="sidebar-pane" id="medage">
+                            <MedianAge/>
                         </div>
 
                         <div className="sidebar-pane" id="settings">

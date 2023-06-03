@@ -4,6 +4,7 @@ import {useContext, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 import {LocationsContext} from "../Sidebar";
+import moment from "moment";
 
 export default function LifeExpect() {
     const map = useContext(MapStateContext);
@@ -11,7 +12,7 @@ export default function LifeExpect() {
     const [location, setLocation] = useState(0);
     const locations = useContext(LocationsContext);
 
-    const addCircle = (lat, lon, value) => {
+    const addCircle = (lat, lon, indicator, value) => {
         let circle = L.circle([lat, lon], {
             color: 'red',
             fillColor: '#f03',
@@ -20,7 +21,7 @@ export default function LifeExpect() {
         })
 
         let tooltip = L.tooltip([lat, lon], {
-            content: `Expectation: ${value} years`,
+            content: `${indicator}: ${value} years`,
             permanent: true
         })
 
@@ -43,11 +44,14 @@ export default function LifeExpect() {
     const locationSelectHandler = (e) => {
         let url = process.env.NEXT_PUBLIC_LIFEXP_API_URL;
         let locationCode = parseInt(e.target.value);
+        let year = moment().year();
+
         setLocation(locationCode);
         if (locationCode === 0) {
             return;
         }
-        fetch(`${url}?startYear=2023&endYear=2023&format=json&location=${locationCode}&sexes=3&variants=4`)
+
+        fetch(`${url}?startYear=${year}&endYear=${year}&format=json&location=${locationCode}&sexes=3&variants=4`)
             .then(response => response.json())
             .then(json => {
                 let lifeExp = json;
@@ -57,7 +61,8 @@ export default function LifeExpect() {
                     }
                 });
                 let locationObj = location[0];
-                addCircle(locationObj.latitude, locationObj.longitude, lifeExp.value);
+                addCircle(locationObj.latitude, locationObj.longitude,
+                    "Life Expectation", Number(lifeExp.value).toFixed(0));
             })
             .catch(e => console.error("error", e));
     };
