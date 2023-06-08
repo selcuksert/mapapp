@@ -29,7 +29,7 @@ export default function Married() {
         let tooltip = L.tooltip([lat, lon], {
             content: `${indicator}: ${formatNumber(value)}`,
             permanent: true
-        })
+        });
 
         let layerGroup = L.layerGroup([circle, tooltip]).addTo(map);
         setLayers(layers => [...layers, layerGroup]);
@@ -83,7 +83,7 @@ export default function Married() {
                     <select disabled={locations.loading} className="form-select text-bg-dark bg-primary"
                             onChange={locationSelectHandler}
                             value={location}
-                            aria-label="Default select example">
+                            aria-label="Select location">
                         <option value="0">{locations.loading ? `Loading...` : `Select location`}</option>
                         {locations.data.map((location) => (
                             <option key={location.id} value={location.id}>{location.name}</option>

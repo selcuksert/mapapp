@@ -8,6 +8,7 @@ import {MapStateContext} from '../pages/index';
 import LifeExpect from "./stats/LifeExpect";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
+    faBaby,
     faBars,
     faBirthdayCake,
     faGear,
@@ -20,6 +21,7 @@ import Settings from "./stats/Settings";
 import Population from "./stats/Population";
 import MedianAge from "./stats/MedianAge";
 import Married from "./stats/Married";
+import Fertility from "./stats/Fertility";
 
 export const LocationsContext = createContext({"loading": true, data: []});
 
@@ -77,6 +79,11 @@ export default function Sidebar() {
                                     <FontAwesomeIcon icon={faRing}/>
                                 </a>
                             </li>
+                            <li>
+                                <a href={"#fertility"} role="tab">
+                                    <FontAwesomeIcon icon={faBaby}/>
+                                </a>
+                            </li>
                         </ul>
 
                         <ul role="tablist">
@@ -100,6 +107,9 @@ export default function Sidebar() {
                         </div>
                         <div className="sidebar-pane" id="married">
                             <Married/>
+                        </div>
+                        <div className="sidebar-pane" id="fertility">
+                            <Fertility/>
                         </div>
                         <div className="sidebar-pane" id="settings">
                             <Settings/>

@@ -6,30 +6,26 @@ import {faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 import {LocationsContext} from "../Sidebar";
 import moment from "moment";
 
-export default function MedianAge() {
+export default function Fertility() {
     const map = useContext(MapStateContext);
     const locations = useContext(LocationsContext);
     const [layers, setLayers] = useState([]);
     const [location, setLocation] = useState(0);
 
-    const formatNumber = (num) => {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-    }
-
     const addCircle = (lat, lon, indicator, value) => {
-        let MAX_VALUE = 100;
+        let MAX_VALUE = 5;
         let MAX_RADIUS = 250_000;
         let circle = L.circle([lat, lon], {
             color: 'red',
-            fillColor: '#707BE7',
+            fillColor: '#8d9981',
             fillOpacity: 0.5,
             radius: (value / MAX_VALUE) * MAX_RADIUS
         })
 
         let tooltip = L.tooltip([lat, lon], {
-            content: `${indicator}: ${formatNumber(value)}`,
+            content: `${indicator}: ${value}`,
             permanent: true
-        })
+        });
 
         let layerGroup = L.layerGroup([circle, tooltip]).addTo(map);
         setLayers(layers => [...layers, layerGroup]);
@@ -48,7 +44,7 @@ export default function MedianAge() {
     };
 
     const locationSelectHandler = (e) => {
-        let url = process.env.NEXT_PUBLIC_MEDAGE_API_URL;
+        let url = process.env.NEXT_PUBLIC_FERTILITY_API_URL;
         let locationCode = parseInt(e.target.value);
         let year = moment().year();
 
@@ -57,25 +53,25 @@ export default function MedianAge() {
             return;
         }
 
-        fetch(`${url}?startYear=${year}&endYear=${year}&format=json&location=${locationCode}&sexes=3&variants=4`)
+        fetch(`${url}?startYear=${year}&endYear=${year}&format=json&location=${locationCode}&variants=4`)
             .then(response => response.json())
             .then(json => {
-                let medianAge = json;
+                let fertility = json;
                 let location = locations.data.filter(loc => {
                     if (loc.id === locationCode) {
                         return loc;
                     }
                 });
                 let locationObj = location[0];
-                addCircle(locationObj.latitude, locationObj.longitude,
-                    "Median Age", Number(medianAge.value).toFixed(0));
+                addCircle(locationObj.latitude, locationObj.longitude, fertility.indicatorDisplayName,
+                    Number(fertility.value).toFixed(1));
             })
             .catch(e => console.error("error", e));
     };
 
     return (
         <>
-            <h1 className="sidebar-header">Median Age<span className="sidebar-close">
+            <h1 className="sidebar-header">Fertility Rate<span className="sidebar-close">
                 <FontAwesomeIcon icon={faCaretLeft}/></span>
             </h1>
             <div className="container mt-lg-2">
