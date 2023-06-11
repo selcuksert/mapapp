@@ -178,7 +178,8 @@ To test this ingress setup:
   helloworld-v2-79d5467d55-khmfg   1/1     Running   0          55s 
   ```
 - Check requests are routed to different versions of helloworld service in a round-robin fashion:
-  HTTP:
+  
+- HTTP:
   ```shell
   for i in {0..4}
   do
@@ -193,7 +194,8 @@ To test this ingress setup:
   Hello version: v2, instance: helloworld-v2-79d5467d55-khmfg
   Hello version: v2, instance: helloworld-v2-79d5467d55-khmfg
   ```
-  HTTPS:
+  
+- HTTPS:
   ```shell
   for i in {0..4}
   do
