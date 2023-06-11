@@ -1,6 +1,20 @@
 {
   "private": true,
-  "version": "0.1.0",
+  "author": {
+    "email": "selcuk.sert@gmail.com",
+    "name": "Selcuk SERT",
+    "url": "https://medium.com/@selcuk.sert"
+  },
+  "name": "mapapp",
+  "description": "World population statistics",
+  "version": "0.2.0",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "last 2 versions",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "scripts": {
     "genver": "genversion --es6 version.js",
     "dev": "npm run genver && next dev",

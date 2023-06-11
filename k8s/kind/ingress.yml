@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: istio-ingress
+  namespace: istio-system
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: istio-ingressgateway
+                port:
+                  name: http2
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: istio-ingressgateway
+                port:
+                  name: https
+
