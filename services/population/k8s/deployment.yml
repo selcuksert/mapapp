@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: population
+  labels:
+    app: population
+    service: population
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: population
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: population
+  labels:
+    app: population
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: population
+  template:
+    metadata:
+      labels:
+        app: population
+    spec:
+      containers:
+        - name: population
+          image: localhost/mapapp/population:1.0
+          resources:
+            limits:
+              memory: "300M"
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8080

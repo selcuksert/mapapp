@@ -6,6 +6,9 @@ This documentation provides guidelines on installation, configuration and archit
 ## Installation Guidelines
 This section is for revealing installation details for underpinning technologies required by project. The development is done on MacBook so guideline may require MacOS based instruction sets. For different platforms please follow technology vendors' installation guidelines.
 
+### JRE and Maven
+This project requires Java SE 17 installed and registered for [Maven](https://maven.apache.org/). Install Maven and set JAVA_OPTS environment variable with the path of Java 17 installation.
+
 ### Podman
 As containerization engine [podman](https://podman.io/) is used:
 
@@ -17,7 +20,7 @@ As containerization engine [podman](https://podman.io/) is used:
   ```
 - Configure podman VM as follows in order to sustain Istio service mesh:
   ```shell
-  podman machine init --cpus 4 --memory 5120 --disk-size 60
+  podman machine init --cpus 4 --memory 8192 --disk-size 100
   podman machine start
   podman system connection default podman-machine-default-root
   ```
@@ -48,9 +51,13 @@ As Kubernetes(k8s) engine [kind](https://kind.sigs.k8s.io/) is used that is a co
   ```shell
   source <(kubectl completion zsh)
   ``` 
-- Install a new k8s cluster on kind with `podman` provider using custom configuration [cluster-config.yml](./k8s/kind/cluster-config.yml) that is to forward ports from the host to an ingress controller running on a node:
+- Add following entry into `~/.zshrc` to enable podman provider for kind:
   ```shell
-  KIND_EXPERIMENTAL_PROVIDER=podman kind create cluster --config=./k8s/kind/cluster-config.yml
+  KIND_EXPERIMENTAL_PROVIDER=podman  
+  ```
+- Install a new k8s cluster on kind using custom configuration [cluster-config.yml](./k8s/kind/cluster-config.yml) that is to forward ports from the host to an ingress controller running on a node:
+  ```shell
+  kind create cluster --config=./k8s/kind/cluster-config.yml
   ```
 - Check whether cluster is available:
   ```shell
@@ -229,4 +236,26 @@ To test this ingress setup:
   kubectl delete ns testingress
   ```
 
+## Deployment of Services
+The project consists of several backend microservices, UI and Hazelcast data-grid. This section provides details to deploy and activate them.
 
+### Building and Loading Custom Images into k8s Cluster
+Invoke custom script, [build_and_load.sh](./k8s/deploy/build_and_load.sh), to build and load custom images into kind k8s cluster:
+```shell
+zsh ./k8s/deploy/build_and_load.sh
+```
+Output should resemble to:
+```text
+Loading image to kind: localhost/mapapp/population:1.0
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+...
+Loading image to kind: localhost/mapapp/ui:latest
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+...
+> Loaded images into kind:
+localhost/mapapp/cacheloc                            1.0                  5e1000b564af4       194MB
+...
+localhost/mapapp/ui                                  latest               3ed85b82e22b2       58.6MB
+```

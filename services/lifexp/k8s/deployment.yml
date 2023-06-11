@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lifexp
+  labels:
+    app: lifexp
+    service: lifexp
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: lifexp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lifexp
+  labels:
+    app: lifexp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lifexp
+  template:
+    metadata:
+      labels:
+        app: lifexp
+    spec:
+      containers:
+        - name: lifexp
+          image: localhost/mapapp/lifexp:1.0
+          resources:
+            limits:
+              memory: "300M"
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8080

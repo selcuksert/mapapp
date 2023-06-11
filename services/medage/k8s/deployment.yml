@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: medage
+  labels:
+    app: medage
+    service: medage
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: medage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: medage
+  labels:
+    app: medage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: medage
+  template:
+    metadata:
+      labels:
+        app: medage
+    spec:
+      containers:
+        - name: medage
+          image: localhost/mapapp/medage:1.0
+          resources:
+            limits:
+              memory: "300M"
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8080

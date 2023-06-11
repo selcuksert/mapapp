@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: married
+  labels:
+    app: married
+    service: married
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: married
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: married
+  labels:
+    app: married
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: married
+  template:
+    metadata:
+      labels:
+        app: married
+    spec:
+      containers:
+        - name: married
+          image: localhost/mapapp/married:1.0
+          resources:
+            limits:
+              memory: "300M"
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8080

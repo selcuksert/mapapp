@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: population-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: population
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - population-gateway
+  http:
+    - match:
+        - uri:
+            exact: /api/population
+      route:
+        - destination:
+            host: population
+            port:
+              number: 8080

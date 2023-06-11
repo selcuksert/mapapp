@@ -5,7 +5,8 @@ metadata:
   namespace: istio-system
 spec:
   rules:
-    - http:
+    - host: localhost
+      http:
         paths:
           - pathType: Prefix
             path: /

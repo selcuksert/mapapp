@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cacheloc
+  labels:
+    app: cacheloc
+    service: cacheloc
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: cacheloc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cacheloc
+  labels:
+    app: cacheloc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cacheloc
+  template:
+    metadata:
+      labels:
+        app: cacheloc
+    spec:
+      containers:
+        - name: cacheloc
+          image: localhost/mapapp/cacheloc:1.0
+          resources:
+            limits:
+              memory: "300M"
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8080
