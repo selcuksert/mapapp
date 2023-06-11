@@ -260,13 +260,13 @@ localhost/mapapp/cacheloc                            1.0                  5e1000
 localhost/mapapp/ui                                  latest               3ed85b82e22b2       58.6MB
 ```
 
-### Deploy application to Service Mesh
+### Deploy Application to Service Mesh
 Invoke following [script](./k8s/deploy/apply.sh) to deploy project to service mesh on kind k8s cluster:
 ```shell
 zsh ./k8s/deploy/apply.sh
 ```
 
-### Clean deployment
+### Uninstall Deployment
 Invoke following [script](./k8s/deploy/clean.sh) to remove deployment:
 ```shell
 zsh ./k8s/deploy/clean.sh
