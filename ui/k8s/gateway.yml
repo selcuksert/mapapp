@@ -19,15 +19,13 @@ metadata:
   name: ui
 spec:
   hosts:
-    - "*"
+    - "ui.mapapp.local"
   gateways:
     - ui-gateway
   http:
     - match:
         - uri:
-            exact: /
-        - uri:
-            prefix: /_next
+            prefix: /
       route:
         - destination:
             host: ui

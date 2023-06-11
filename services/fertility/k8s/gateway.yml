@@ -6,12 +6,12 @@ spec:
   selector:
     istio: ingressgateway # use istio default controller
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -19,15 +19,15 @@ metadata:
   name: fertility
 spec:
   hosts:
-  - "*"
+    - "ui.mapapp.local"
   gateways:
-  - fertility-gateway
+    - fertility-gateway
   http:
-  - match:
-    - uri:
-        exact: /api/fertility
-    route:
-    - destination:
-        host: fertility
-        port:
-          number: 8080
+    - match:
+        - uri:
+            exact: /api/fertility
+      route:
+        - destination:
+            host: fertility
+            port:
+              number: 8080

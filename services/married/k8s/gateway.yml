@@ -19,7 +19,7 @@ metadata:
   name: married
 spec:
   hosts:
-    - "*"
+    - "ui.mapapp.local"
   gateways:
     - married-gateway
   http:

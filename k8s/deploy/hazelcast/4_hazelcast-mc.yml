@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hazelcast-mc
+spec:
+  serviceName: hazelcast-mc
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hazelcast-mc
+  template:
+    metadata:
+      labels:
+        app: hazelcast-mc
+    spec:
+      containers:
+        - name: hazelcast-mc
+          image: hazelcast/management-center:5.3.0
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: hazelcast-mc-storage
+              mountPath: /data
+          env:
+            - name: MC_DEFAULT_CLUSTER
+              valueFrom:
+                configMapKeyRef:
+                  name: hazelcast-configuration
+                  key: cluster_name
+            - name: MC_DEFAULT_CLUSTER_MEMBERS
+              value: hazelcast-cluster
+            - name: MC_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mc-secret
+                  key: mc-username
+            - name: MC_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mc-secret
+                  key: mc-password
+      volumes:
+        - name: hazelcast-mc-storage
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hazelcast-mc
+spec:
+  type: ClusterIP
+  selector:
+    app: hazelcast-mc
+  ports:
+    - name: hazelcast-mc-http
+      port: 8080

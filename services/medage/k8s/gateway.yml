@@ -19,7 +19,7 @@ metadata:
   name: medage
 spec:
   hosts:
-    - "*"
+    - "ui.mapapp.local"
   gateways:
     - medage-gateway
   http:

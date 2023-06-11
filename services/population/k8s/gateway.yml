@@ -19,7 +19,7 @@ metadata:
   name: population
 spec:
   hosts:
-    - "*"
+    - "ui.mapapp.local"
   gateways:
     - population-gateway
   http:

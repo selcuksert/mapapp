@@ -5,7 +5,7 @@ metadata:
   namespace: istio-system
 spec:
   rules:
-    - host: localhost
+    - host: "*.mapapp.local"
       http:
         paths:
           - pathType: Prefix

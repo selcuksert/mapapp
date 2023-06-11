@@ -32,13 +32,13 @@ public class HazelcastConfig {
         // Production uses k8s, development uses docker-compose for Hazelcast cluster
         if (ConfigUtils.getProfiles().contains("prod")) {
             clientConfig.getNetworkConfig().getKubernetesConfig().setEnabled(true);
-            clientConfig.getNetworkConfig().getKubernetesConfig().setProperty("service-name", appConfig.hazelcast().clusterName());
+            clientConfig.getNetworkConfig().getKubernetesConfig().setProperty("service-name", "hazelcast-cluster");
         } else {
             String[] members = appConfig.hazelcast().members().toArray(new String[0]);
             clientConfig.getNetworkConfig().addAddress(members);
-            clientConfig.setClusterName(appConfig.hazelcast().clusterName());
         }
 
+        clientConfig.setClusterName(appConfig.hazelcast().clusterName());
         ClientConnectionStrategyConfig connectionStrategyConfig = clientConfig.getConnectionStrategyConfig();
         ConnectionRetryConfig connectionRetryConfig = connectionStrategyConfig.getConnectionRetryConfig();
         connectionRetryConfig.setInitialBackoffMillis(appConfig.hazelcast().retryConfig().initialBackoffMillis())
