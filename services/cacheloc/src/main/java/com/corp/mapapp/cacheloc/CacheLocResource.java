@@ -1,26 +1,26 @@
 package com.corp.mapapp.cacheloc;
 
+import com.corp.mapapp.cacheloc.model.Location;
 import com.corp.mapapp.cacheloc.service.CacheService;
+import io.smallrye.common.annotation.Blocking;
+import io.smallrye.mutiny.Multi;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/cacheloc")
+@Path("/locations")
 public class CacheLocResource {
 
     @Inject
     CacheService cacheService;
 
-    @POST
-    @Path("/{key}/{value}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String add(@PathParam("key") String key, @PathParam("value") String value) {
-        return cacheService.add(key, value);
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Blocking
+    public Multi<Location> list() {
+        return cacheService.all();
     }
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String get(@QueryParam("key") String key) {
-        return cacheService.get(key);
-    }
 }

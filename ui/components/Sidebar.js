@@ -32,7 +32,7 @@ export default function Sidebar() {
 
     const getLocations = () => {
         let url = process.env.NEXT_PUBLIC_LOCATIONS_API_URL;
-        fetch(`${url}?sort=name`)
+        fetch(url)
             .then(response => response.json())
             .then(json => {
                 setLocations({

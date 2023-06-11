@@ -10,7 +10,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.jboss.resteasy.reactive.RestQuery;
 
-@Path("/location")
+@Path("/locations")
 public class LocationResource {
 
     @Inject

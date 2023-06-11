@@ -8,6 +8,12 @@ import java.util.List;
 
 @ConfigMapping(prefix = "cacheloc")
 public interface AppConfig {
+    /**
+     * Map name of location list
+     * @return map name
+     */
+    String mapName();
+
     Hazelcast hazelcast();
 
     /**
