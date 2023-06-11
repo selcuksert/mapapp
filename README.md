@@ -6,6 +6,13 @@ This documentation provides guidelines on installation, configuration and archit
 ## Installation Guidelines
 This section is for revealing installation details for underpinning technologies required by project. The development is done on MacBook so guideline may require MacOS based instruction sets. For different platforms please follow technology vendors' installation guidelines.
 
+### URL Entries
+Add following entries to `hosts`(e.g. /etc/hosts on MacOS) file:
+```text
+127.0.0.1 ui.mapapp.local
+127.0.0.1 hazelcast.mapapp.local
+```
+
 ### JRE and Maven
 This project requires Java SE 17 installed and registered for [Maven](https://maven.apache.org/). Install Maven and set JAVA_OPTS environment variable with the path of Java 17 installation.
 
