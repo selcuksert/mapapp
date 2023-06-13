@@ -5,7 +5,6 @@ import 'sidebar-v2/js/leaflet-sidebar';
 import styles from '../styles/Sidebar.module.css';
 import {createContext, useContext, useEffect, useState} from 'react';
 import {MapStateContext} from '../pages/index';
-import LifeExpect from "./stats/LifeExpect";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faBaby,
@@ -16,12 +15,9 @@ import {
     faPersonWalkingDashedLineArrowRight,
     faRing
 } from '@fortawesome/free-solid-svg-icons';
-import Home from "./stats/Home";
-import Settings from "./stats/Settings";
-import Population from "./stats/Population";
-import MedianAge from "./stats/MedianAge";
-import Married from "./stats/Married";
-import Fertility from "./stats/Fertility";
+import Home from "./sidebar/Home";
+import Settings from "./sidebar/Settings";
+import Stats from "./sidebar/Stats";
 
 export const LocationsContext = createContext({"loading": true, data: []});
 
@@ -47,6 +43,10 @@ export default function Sidebar() {
         L.control.sidebar('sidebar').addTo(map);
         getLocations();
     }, []);
+
+    const formatNumber = (value) => {
+        return value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    }
 
     return (
         <>
@@ -97,19 +97,34 @@ export default function Sidebar() {
                             <Home/>
                         </div>
                         <div className="sidebar-pane" id="expectlife">
-                            <LifeExpect/>
+                            <Stats maxValue={100} maxRadius={250_000} header={`Life Expectancy at Birth`}
+                                   baseUrl={process.env.NEXT_PUBLIC_LIFEXP_API_URL} fillColor={`#f03`}
+                                   valueFormatter={(value) => value} extraQueries={`sexes=3`}
+                                   fractionDigits={0}
+                                   indicatorDisplayName={`Life Expectancy (yrs)`}/>
                         </div>
                         <div className="sidebar-pane" id="population">
-                            <Population/>
+                            <Stats maxValue={250_000_000} maxRadius={250_000} header={`Population`}
+                                   baseUrl={process.env.NEXT_PUBLIC_POPULATION_API_URL} fillColor={`#8DEA23`}
+                                   valueFormatter={formatNumber} extraQueries={`sexes=3`}
+                                   fractionDigits={0}
+                                   indicatorDisplayName={`Population`}/>
                         </div>
                         <div className="sidebar-pane" id="medage">
-                            <MedianAge/>
+                            <Stats maxValue={100} maxRadius={250_000} header={`Median Age`}
+                                   baseUrl={process.env.NEXT_PUBLIC_MEDAGE_API_URL} fillColor={`#707BE7`}
+                                   fractionDigits={1}
+                                   valueFormatter={formatNumber}/>
                         </div>
                         <div className="sidebar-pane" id="married">
-                            <Married/>
+                            <Stats maxValue={100} maxRadius={250_000} header={`Currently married (Percent)`}
+                                   baseUrl={process.env.NEXT_PUBLIC_MARRIED_API_URL} fillColor={`#40ECDC`}
+                                   fractionDigits={1} valueFormatter={(value) => value}/>
                         </div>
                         <div className="sidebar-pane" id="fertility">
-                            <Fertility/>
+                            <Stats maxValue={5} maxRadius={250_000} header={`Fertility Rate`}
+                                   baseUrl={process.env.NEXT_PUBLIC_FERTILITY_API_URL} fillColor={`#8d9981`}
+                                   fractionDigits={1} valueFormatter={(value) => value}/>
                         </div>
                         <div className="sidebar-pane" id="settings">
                             <Settings/>

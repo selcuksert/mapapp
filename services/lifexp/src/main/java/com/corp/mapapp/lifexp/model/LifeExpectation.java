@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class LifeExpectation {
-    private String indicator;
+    private String indicatorDisplayName;
     private String timeLabel;
     private Double value;
     private String location;
