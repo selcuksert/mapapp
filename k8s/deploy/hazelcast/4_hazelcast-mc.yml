@@ -29,6 +29,8 @@ spec:
                   key: cluster_name
             - name: MC_DEFAULT_CLUSTER_MEMBERS
               value: hazelcast-cluster
+            - name: JAVA_OPTS
+              value: "-Dhazelcast.mc.lock.skip=true"
             - name: MC_ADMIN_USER
               valueFrom:
                 secretKeyRef:

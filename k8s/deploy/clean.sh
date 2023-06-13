@@ -25,4 +25,6 @@ for apply_yml in "$SCRIPT_PATH"/../../services/*/k8s/*.yml "$SCRIPT_PATH"/../../
   kubectl delete -f "$apply_yml"
 done
 
+kubectl delete secret mc-secret
+
 deleteImages
