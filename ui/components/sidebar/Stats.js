@@ -1,10 +1,10 @@
-import {MapStateContext} from "../../pages";
 import L from "leaflet";
 import {useContext, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 import {LocationsContext} from "../Sidebar";
 import moment from "moment";
+import {MapStateContext} from "../../pages";
 
 export default function Stats({
                                   fillColor,

@@ -3,7 +3,7 @@ import 'sidebar-v2/css/leaflet-sidebar.min.css'
 import L from 'leaflet'
 import styles from '../styles/Map.module.css';
 import {useContext, useEffect, useRef} from 'react';
-import {MapUpdateContext} from '../pages/index';
+import {MapUpdateContext} from "../pages";
 
 export default function LeafletMap({latitude, longitude}) {
 
@@ -24,7 +24,7 @@ export default function LeafletMap({latitude, longitude}) {
             dragging: true
         }).setView([latitude, longitude], 5);
 
-        L.tileLayer('http://{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
+        L.tileLayer('//{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
             maxZoom: 10,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
             attribution: `Map Data &copy; ${new Date().getFullYear()} ${process.env.NEXT_PUBLIC_MAP_ATTRIBUTION}`

@@ -1,0 +1,4 @@
+auth:
+  adminUser: admin
+  existingSecret: kc-secret
+  passwordSecretKey: ADMIN_PASSWORD

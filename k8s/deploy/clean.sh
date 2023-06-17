@@ -14,6 +14,21 @@ function deleteImages() {
   done
 }
 
+function deleteHazelcast() {
+  for apply_yml in "$SCRIPT_PATH"/../../services/*/k8s/*.yml "$SCRIPT_PATH"/../../ui/k8s/*.yml "$SCRIPT_PATH"/hazelcast/*.yml; do
+    kubectl delete -f "$apply_yml"
+  done
+
+  kubectl delete secret mc-secret
+}
+
+function deleteKeycloak() {
+  kubectl delete -f "$SCRIPT_PATH"/keycloak/gateway.yml
+  helm delete keycloak
+  kubectl delete secret kc-secret
+  kubectl delete persistentvolumeclaims data-keycloak-postgresql-0
+}
+
 if ! kubectl get ns $NAMESPACE &>/dev/null; then
   kubectl create ns $NAMESPACE
   kubectl label namespace $NAMESPACE istio-injection=enabled
@@ -21,10 +36,6 @@ fi
 
 kubectl config set-context "$(kubectl config current-context)" --namespace=$NAMESPACE
 
-for apply_yml in "$SCRIPT_PATH"/../../services/*/k8s/*.yml "$SCRIPT_PATH"/../../ui/k8s/*.yml "$SCRIPT_PATH"/hazelcast/*.yml; do
-  kubectl delete -f "$apply_yml"
-done
-
-kubectl delete secret mc-secret
-
-deleteImages
+deleteImages &&
+  deleteHazelcast &&
+  deleteKeycloak

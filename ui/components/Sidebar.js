@@ -4,7 +4,6 @@ import L from 'leaflet'
 import 'sidebar-v2/js/leaflet-sidebar';
 import styles from '../styles/Sidebar.module.css';
 import {createContext, useContext, useEffect, useState} from 'react';
-import {MapStateContext} from '../pages/index';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faBaby,
@@ -18,6 +17,7 @@ import {
 import Home from "./sidebar/Home";
 import Settings from "./sidebar/Settings";
 import Stats from "./sidebar/Stats";
+import {MapStateContext} from "../pages";
 
 export const LocationsContext = createContext({"loading": true, data: []});
 

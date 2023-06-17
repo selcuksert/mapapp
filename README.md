@@ -11,6 +11,7 @@ Add following entries to `hosts`(e.g. /etc/hosts on MacOS) file:
 ```text
 127.0.0.1 ui.mapapp.local
 127.0.0.1 hazelcast.mapapp.local
+127.0.0.1 keycloak.mapapp.local
 ```
 
 ### JRE and Maven
@@ -85,6 +86,12 @@ As Kubernetes(k8s) engine [kind](https://kind.sigs.k8s.io/) is used that is a co
   
   To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
   ```
+
+### Helm
+As the package manager for k8s helm is used:
+```shell
+brew install helm
+```
 
 ### Istio
 As service mesh [Istio](https://istio.io/) is used:

@@ -15,3 +15,7 @@ kubectl create secret generic mc-secret --from-env-file="$SCRIPT_PATH"/hazelcast
 for apply_yml in "$SCRIPT_PATH"/hazelcast/*.yml "$SCRIPT_PATH"/../../services/*/k8s/*.yml "$SCRIPT_PATH"/../../ui/k8s/*.yml; do
   kubectl apply -f "$apply_yml"
 done
+
+kubectl create secret generic --from-env-file="$SCRIPT_PATH"/keycloak/keycloak.env kc-secret
+helm install keycloak -f "$SCRIPT_PATH"/keycloak/values.yaml oci://registry-1.docker.io/bitnamicharts/keycloak
+kubectl apply -f "$SCRIPT_PATH"/keycloak/gateway.yml
