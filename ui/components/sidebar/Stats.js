@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 import {LocationsContext} from "../Sidebar";
 import moment from "moment";
-import {MapStateContext} from "../../pages";
+import {KeycloakContext, MapStateContext} from "../../pages";
 
 export default function Stats({
                                   fillColor,
@@ -19,6 +19,7 @@ export default function Stats({
                               }) {
     const map = useContext(MapStateContext);
     const locations = useContext(LocationsContext);
+    const keycloak = useContext(KeycloakContext);
     const [layers, setLayers] = useState([]);
     const [location, setLocation] = useState(0);
 
@@ -64,7 +65,12 @@ export default function Stats({
 
         extraQueries = extraQueries ? `&${extraQueries}` : ''
 
-        fetch(`${baseUrl}?startYear=${year}&endYear=${year}&format=json&location=${locationCode}&variants=4${extraQueries}`)
+        fetch(`${baseUrl}?startYear=${year}&endYear=${year}&format=json&location=${locationCode}&variants=4${extraQueries}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${keycloak.token}`
+            }
+        })
             .then(response => response.json())
             .then(json => {
                 let location = locations.data.filter(loc => {

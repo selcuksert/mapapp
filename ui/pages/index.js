@@ -34,7 +34,7 @@ export default function Home() {
     const [authenticated, setAuthenticated] = useState(null);
 
     useEffect(() => {
-        let keycloak = new Keycloak('/keycloak.json');
+        let keycloak = new Keycloak(`/keycloak/${process.env.NODE_ENV}.json`);
         keycloak.init({onLoad: 'login-required'}).then(authenticated => {
             setKeycloak(keycloak);
             setAuthenticated(authenticated);
@@ -43,7 +43,7 @@ export default function Home() {
     }, []);
 
     return (
-        keycloak && authenticated ?
+        !!keycloak && !!authenticated ?
             <div>
                 <Head>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>

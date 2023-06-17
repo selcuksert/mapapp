@@ -3,6 +3,7 @@ package com.corp.mapapp.population;
 import com.corp.mapapp.population.model.Population;
 import com.corp.mapapp.population.service.PopulationService;
 import io.smallrye.mutiny.Uni;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -18,6 +19,7 @@ public class PopulationResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"admin", "user"})
     public Uni<Population> population(@RestQuery String location,
                                       @RestQuery String format, @RestQuery String startYear, @RestQuery String endYear,
                                       @RestQuery String variants, @RestQuery String sexes) {

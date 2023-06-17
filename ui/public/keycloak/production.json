@@ -1,0 +1,8 @@
+{
+  "realm": "mapapp",
+  "auth-server-url": "http://keycloak.mapapp.local/",
+  "ssl-required": "external",
+  "resource": "mapclient-prod",
+  "public-client": true,
+  "confidential-port": 0
+}

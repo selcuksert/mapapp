@@ -3,6 +3,7 @@ package com.corp.mapapp.fertility;
 import com.corp.mapapp.fertility.model.Fertility;
 import com.corp.mapapp.fertility.service.FertilityService;
 import io.smallrye.mutiny.Uni;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -18,6 +19,7 @@ public class FertilityResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"admin", "user"})
     public Uni<Fertility> married(@RestQuery String location,
                                   @RestQuery String format, @RestQuery String startYear, @RestQuery String endYear,
                                   @RestQuery String variants) {

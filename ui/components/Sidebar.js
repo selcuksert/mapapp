@@ -17,18 +17,24 @@ import {
 import Home from "./sidebar/Home";
 import Settings from "./sidebar/Settings";
 import Stats from "./sidebar/Stats";
-import {MapStateContext} from "../pages";
+import {KeycloakContext, MapStateContext} from "../pages";
 
 export const LocationsContext = createContext({"loading": true, data: []});
 
 export default function Sidebar() {
 
     const map = useContext(MapStateContext);
+    const keycloak = useContext(KeycloakContext);
     const [locations, setLocations] = useState({"loading": true, data: []});
 
     const getLocations = () => {
         let url = process.env.NEXT_PUBLIC_LOCATIONS_API_URL;
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${keycloak.token}`
+            }
+        })
             .then(response => response.json())
             .then(json => {
                 setLocations({

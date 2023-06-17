@@ -4,6 +4,7 @@ import com.corp.mapapp.cacheloc.model.Location;
 import com.corp.mapapp.cacheloc.service.CacheService;
 import io.smallrye.common.annotation.Blocking;
 import io.smallrye.mutiny.Multi;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -19,6 +20,7 @@ public class CacheLocResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Blocking
+    @RolesAllowed({"admin", "user"})
     public Multi<Location> list() {
         return cacheService.all();
     }
