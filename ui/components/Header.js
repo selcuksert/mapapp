@@ -12,7 +12,7 @@ export default function Header({title}) {
     const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
-        if (!!keycloak) {
+        if (keycloak) {
             keycloak.loadUserInfo().then(info => {
                 setUserInfo(info);
             });
@@ -42,13 +42,13 @@ export default function Header({title}) {
                                     <a className="nav-link dropdown-toggle" href="#" role="button"
                                        data-bs-toggle="dropdown"
                                        aria-expanded="false">
-                                        {!!userInfo ? userInfo['preferred_username'] : 'user'}
+                                        {userInfo ? userInfo['preferred_username'] : 'user'}
                                     </a>
                                     <ul className="dropdown-menu">
                                         <li>
                                             <a className="dropdown-item" href="#"><FontAwesomeIcon
                                                 icon={faIdBadge}
-                                                className="me-2"/>{!!userInfo ? userInfo.name : 'name'}
+                                                className="me-2"/>{userInfo ? userInfo.name : 'name'}
                                             </a>
                                         </li>
                                         <li>

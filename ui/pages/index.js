@@ -10,8 +10,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import {config} from '@fortawesome/fontawesome-svg-core';
 import Keycloak from "keycloak-js";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import Loading from "../components/Loading";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -72,7 +71,7 @@ export default function Home() {
             </div>
             :
             <div>
-                <FontAwesomeIcon icon={faSpinner}/>
+                <Loading/>
             </div>
     )
 }
