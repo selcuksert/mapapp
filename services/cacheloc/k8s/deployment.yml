@@ -31,6 +31,9 @@ spec:
       containers:
         - name: cacheloc
           image: localhost/mapapp/cacheloc:1.0
+          env:
+            - name: LOG_LEVEL
+              value: INFO
           resources:
             limits:
               memory: "300M"

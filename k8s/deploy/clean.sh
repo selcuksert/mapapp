@@ -29,13 +29,15 @@ function deleteKeycloak() {
   kubectl delete persistentvolumeclaims data-keycloak-postgresql-0
 }
 
-if ! kubectl get ns $NAMESPACE &>/dev/null; then
-  kubectl create ns $NAMESPACE
-  kubectl label namespace $NAMESPACE istio-injection=enabled
-fi
+function deleteServices() {
+  for apply_yml in "$SCRIPT_PATH"/../../services/*/k8s/*.yml "$SCRIPT_PATH"/../../ui/k8s/*.yml; do
+    kubectl apply -f "$apply_yml" --all
+  done
+}
 
 kubectl config set-context "$(kubectl config current-context)" --namespace=$NAMESPACE
 
 deleteImages &&
+  deleteServices &&
   deleteHazelcast &&
   deleteKeycloak
