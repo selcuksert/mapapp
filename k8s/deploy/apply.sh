@@ -16,6 +16,7 @@ for apply_yml in "$SCRIPT_PATH"/hazelcast/*.yml "$SCRIPT_PATH"/../../services/*/
   kubectl apply -f "$apply_yml"
 done
 
+kubectl create configmap keycloak-realm --from-file=realm.json="$SCRIPT_PATH"/keycloak/realm.json
 kubectl create secret generic --from-env-file="$SCRIPT_PATH"/keycloak/keycloak.env kc-secret
 helm install keycloak -f "$SCRIPT_PATH"/keycloak/values.yaml oci://registry-1.docker.io/bitnamicharts/keycloak
 kubectl apply -f "$SCRIPT_PATH"/keycloak/gateway.yml

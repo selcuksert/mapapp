@@ -27,6 +27,7 @@ function deleteKeycloak() {
   helm delete keycloak
   kubectl delete secret kc-secret
   kubectl delete persistentvolumeclaims data-keycloak-postgresql-0
+  kubectl delete configmap keycloak-realm
 }
 
 function deleteServices() {

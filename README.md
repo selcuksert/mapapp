@@ -285,3 +285,12 @@ Invoke following [script](./k8s/deploy/clean.sh) to remove deployment:
 ```shell
 zsh ./k8s/deploy/clean.sh
 ```
+
+## Keycloak
+The project utilizes Keycloak as IdM with OAuth2 & OIDC support. The [keycloak.env](./k8s/deploy/keycloak/keycloak.env) contains password for admin user of administration portal in `keycloak.mapapp.local`. The setup automatically deploys a designated [realm.json](./k8s/deploy/keycloak/realm.json) exported within server (see [Importing and Exporting Realms
+](https://www.keycloak.org/server/importExport)) with following users for the sake of testing:
+
+| username | password  | realm  | role  |
+|----------|-----------|--------|-------|
+| jsmith   | Mnbuyt765 | mapapp | user  |
+| awhite   | Abc123def | mapapp | admin |

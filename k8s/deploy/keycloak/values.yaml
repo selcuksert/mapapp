@@ -2,3 +2,18 @@ auth:
   adminUser: admin
   existingSecret: kc-secret
   passwordSecretKey: ADMIN_PASSWORD
+extraStartupArgs: "--import-realm"
+extraVolumeMounts:
+  - name: config
+    mountPath: "/opt/bitnami/keycloak/data/import"
+    readOnly: true
+extraVolumes:
+  - name: config
+    configMap:
+      name: keycloak-realm
+      items:
+        - key: "realm.json"
+          path: "realm.json"
+cache:
+  # To export realms set this to false
+  enabled: true
