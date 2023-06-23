@@ -157,9 +157,13 @@ As service mesh [Istio](https://istio.io/) is used:
   ```
 #### Ingress Setup
 To launch deployments on Istio, an ingress controller needs to be deployed on cluster. This setup leverages [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/):
-- Apply Nginx ingress controller objects via official yaml for kind:
+- Apply Nginx ingress controller objects via official Helm chart:
   ```shell
-  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+  kubectl create ns ingress-nginx
+  helm install --namespace ingress-nginx nginx-ingress ingress-nginx \
+      --set controller.hostPort.enabled=true \
+      --set controller.service.type=NodePort \
+      --repo https://kubernetes.github.io/ingress-nginx
   ```
 - Validate whether ingress controller is ready to accept requests:
   ```shell

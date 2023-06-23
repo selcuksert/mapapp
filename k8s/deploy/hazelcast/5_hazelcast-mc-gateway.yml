@@ -6,12 +6,12 @@ spec:
   selector:
     istio: ingressgateway # use istio default controller
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - hazelcast.mapapp.local
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -19,15 +19,15 @@ metadata:
   name: hazelcast-mc
 spec:
   hosts:
-  - "hazelcast.mapapp.local"
+    - "hazelcast.mapapp.local"
   gateways:
-  - hazelcast-mc-gateway
+    - hazelcast-mc-gateway
   http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        host: hazelcast-mc
-        port:
-          number: 8080
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: hazelcast-mc
+            port:
+              number: 8080
