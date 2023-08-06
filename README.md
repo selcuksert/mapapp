@@ -1,6 +1,8 @@
 # World Population Statistics Portal on Istio
 A project to display population statistics on a map based on [UN Population Division](https://www.un.org/development/desa/pd/) data. The stack is deployable on Istio service mesh and leverages [Leaflet](https://leafletjs.com/), [Next.js](https://nextjs.org/), [Quarkus](https://quarkus.io/) and [Hazelcast](https://hazelcast.com/). 
 
+![Main Page](./docs/main.png)
+
 This documentation provides guidelines on installation, configuration and architectural details.
 
 ## Installation Guidelines
