@@ -56,9 +56,9 @@ function loadTok8s() {
 }
 
 function run() {
-  #validate &&
-  #  buildBackend &&
-  #  buildUI &&
+  validate &&
+    buildBackend &&
+    buildUI &&
     loadTok8s
 }
 
