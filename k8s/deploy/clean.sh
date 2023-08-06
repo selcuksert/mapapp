@@ -42,3 +42,5 @@ deleteImages &&
   deleteServices &&
   deleteHazelcast &&
   deleteKeycloak
+
+kubectl delete secrets --all

@@ -3,6 +3,8 @@ SCRIPT_PATH="${0:A:h}"
 
 NAMESPACE=mapapp
 
+podman start kind-control-plane kind-worker
+
 if ! kubectl get ns $NAMESPACE &>/dev/null; then
   kubectl create ns $NAMESPACE
   kubectl label namespace $NAMESPACE istio-injection=enabled

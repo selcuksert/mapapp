@@ -29,14 +29,14 @@ function validate() {
 function buildBackend() {
   echo -e "\n> Building backend images..."
   for pom_xml in "$SCRIPT_PATH"/../../services/*/pom.xml; do
-    echo "Processing service: $(dirname $pom_xml | awk -F'/' '{print $(NF)}')"
+    echo "Processing service: $(dirname "$pom_xml" | awk -F'/' '{print $(NF)}')"
     mvn -q -f "$pom_xml" -Dquarkus.container-image.group=mapapp -DskipTests clean package quarkus:image-build
   done
 }
 
 function buildUI() {
   echo -e "\n> Building UI image..."
-  podman build -q -t mapapp/ui:"$(jq -r .version < "$SCRIPT_PATH"/../../ui/package.json)" "$SCRIPT_PATH"/../../ui/.
+  podman build -q -t mapapp/ui:"$(jq -r .version <"$SCRIPT_PATH"/../../ui/package.json)" "$SCRIPT_PATH"/../../ui/.
 }
 
 function listImages() {
@@ -44,18 +44,21 @@ function listImages() {
 }
 
 function loadTok8s() {
+  podman start kind-control-plane kind-worker
   for image in $(listImages); do
+    podman save --format=oci-archive "$image" > "$SCRIPT_PATH"/image.tar
     echo "Loading image to kind: $image"
-    kind load image-archive <(podman save --format=oci-archive "$image")
+    kind load image-archive "$SCRIPT_PATH"/image.tar
+    rm "$SCRIPT_PATH"/image.tar
   done
   echo -e "\n> Loaded images into kind:"
-  podman exec -it kind-control-plane crictl images | grep mapapp
+  podman exec -it kind-worker crictl images | grep mapapp
 }
 
 function run() {
-  validate &&
-    buildBackend &&
-    buildUI &&
+  #validate &&
+  #  buildBackend &&
+  #  buildUI &&
     loadTok8s
 }
 

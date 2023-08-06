@@ -4,7 +4,7 @@ A project to display population statistics on a map based on [UN Population Divi
 This documentation provides guidelines on installation, configuration and architectural details.
 
 ## Installation Guidelines
-This section is for revealing installation details for underpinning technologies required by project. The development is done on MacBook so guideline may require MacOS based instruction sets. For different platforms please follow technology vendors' installation guidelines.
+This section is for revealing installation details for underpinning technologies required by project. **The development is done on MacBook so guideline may require MacOS based instruction sets.** For different platforms please follow technology vendors' installation guidelines.
 
 ### URL Entries
 Add following entries to `hosts`(e.g. /etc/hosts on MacOS) file:
@@ -29,6 +29,7 @@ As containerization engine [podman](https://podman.io/) is used:
 - Configure podman VM as follows in order to sustain Istio service mesh:
   ```shell
   podman machine init --cpus 4 --memory 8192 --disk-size 100
+  podman machine set --rootful
   podman machine start
   podman system connection default podman-machine-default-root
   ```
@@ -43,9 +44,7 @@ As containerization engine [podman](https://podman.io/) is used:
   ```
 
 ### kind
-`Starting tunnel for service istio-ingressgateway.`
-
-As Kubernetes(k8s) engine [kind](https://kind.sigs.k8s.io/) is used that is a convenient way to have a Kubernetes cluster for local development.
+[kind](https://kind.sigs.k8s.io/) is used that is a convenient way to have a Kubernetes (k8s) cluster for local development.
 
 - Install kind using `brew`:
   ```shell
@@ -63,7 +62,7 @@ As Kubernetes(k8s) engine [kind](https://kind.sigs.k8s.io/) is used that is a co
   ```shell
   KIND_EXPERIMENTAL_PROVIDER=podman  
   ```
-- Install a new k8s cluster on kind using custom configuration [cluster-config.yml](./k8s/kind/cluster-config.yml) that is to forward ports from the host to an ingress controller running on a node:
+- Open a new terminal window and install a new k8s cluster on kind using custom configuration [cluster-config.yml](./k8s/kind/cluster-config.yml) that contains one control-plane and one worker node setup. It also has mappings to forward ports from the host to an ingress controller running on a node:
   ```shell
   kind create cluster --config=./k8s/kind/cluster-config.yml
   ```
@@ -86,6 +85,12 @@ As Kubernetes(k8s) engine [kind](https://kind.sigs.k8s.io/) is used that is a co
   
   To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
   ```
+
+After a restart/reboot of your PC/server, containers for your kind setup (`kind - k8s in Docker` uses Docker containers for a k8s setup) should be started manually as they are not configured to restart automatically by kind:
+
+```shell
+podman start kind-control-plane kind-worker
+```
 
 ### Helm
 As the package manager for k8s helm is used:
@@ -114,7 +119,7 @@ As service mesh [Istio](https://istio.io/) is used:
   ```shell
   istioctl x precheck
   ```
-  Output should be (for v1.18.0):
+  Output should be (for v1.18.2):
   ```text
   ✔ No issues found when checking the cluster. Istio is safe to install or upgrade!
   To get started, check out https://istio.io/latest/docs/setup/getting-started/
@@ -123,7 +128,7 @@ As service mesh [Istio](https://istio.io/) is used:
   ```shell
   istioctl install --set profile=demo -y
   ```
-  Output should be (for v1.18.0):
+  Output should be (for v1.18.2):
   ```text
   ✔ Istio core installed
   ✔ Istiod installed
