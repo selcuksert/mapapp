@@ -5,6 +5,10 @@ A project to display population statistics on a map based on [UN Population Divi
 
 This documentation provides guidelines on installation, configuration and architectural details.
 
+## Architecture
+
+![architecture](./docs/models/arch-mapapp.drawio.png)
+
 ## Installation Guidelines
 This section is for revealing installation details for underpinning technologies required by project. **The development is done on MacBook so guideline may require MacOS based instruction sets.** For different platforms please follow technology vendors' installation guidelines.
 
