@@ -44,3 +44,4 @@ deleteImages &&
   deleteKeycloak
 
 kubectl delete secrets --all
+kubectl delete -f "$SCRIPT_PATH"/istio/gateways.yml

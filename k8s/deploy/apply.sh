@@ -14,6 +14,8 @@ kubectl config set-context "$(kubectl config current-context)" --namespace=$NAME
 
 kubectl create secret generic mc-secret --from-env-file="$SCRIPT_PATH"/hazelcast/deploy.env
 
+kubectl apply -f "$SCRIPT_PATH"/istio/gateways.yml
+
 for apply_yml in "$SCRIPT_PATH"/hazelcast/*.yml "$SCRIPT_PATH"/../../services/*/k8s/*.yml "$SCRIPT_PATH"/../../ui/k8s/*.yml; do
   kubectl apply -f "$apply_yml"
 done
