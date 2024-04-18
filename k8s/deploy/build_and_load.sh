@@ -18,9 +18,9 @@ function validate() {
   fi
 
   JAVA_MAJOR_VER=$("$JAVA_HOME"/bin/javap -verbose java.lang.String | grep "major.version" | awk -F':' '{print $2}' | xargs)
-  if [ "$JAVA_MAJOR_VER" -ne 61 ]; then
-    echo -e "This project requires Java SE 17 installed and registered for Maven." \
-      "Set JAVA_OPTS environment variable with the path of Java 17 installation." \
+  if [ "$JAVA_MAJOR_VER" -ne 65 ]; then
+    echo -e "This project requires Java SE 21 installed and registered for Maven." \
+      "Set JAVA_OPTS environment variable with the path of Java 21 installation." \
       "Current Java major version: $JAVA_MAJOR_VER"
     exit
   fi

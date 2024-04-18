@@ -10,7 +10,7 @@ This documentation provides guidelines on installation, configuration and archit
 ![architecture](./docs/models/arch-mapapp.drawio.png)
 
 ## Installation Guidelines
-This section is for revealing installation details for underpinning technologies required by project. **The development is done on MacBook so guideline may require MacOS based instruction sets.** For different platforms please follow technology vendors' installation guidelines.
+This section is for revealing installation details for underpinning technologies required by project. **The development is done on MacBook so guideline is based on MacOS based instruction sets.** For different platforms please follow technology vendors' installation guidelines.
 
 ### URL Entries
 Add following entries to `hosts`(e.g. /etc/hosts on MacOS) file:
@@ -68,7 +68,7 @@ As containerization engine [podman](https://podman.io/) is used:
   ```shell
   KIND_EXPERIMENTAL_PROVIDER=podman  
   ```
-- Open a new terminal window and install a new k8s cluster on kind using custom configuration [cluster-config.yml](./k8s/kind/cluster-config.yml) that contains one control-plane and one worker node setup. It also has mappings to forward ports from the host to an ingress controller running on a node:
+- Open a new terminal window and install a new k8s cluster on kind using custom configuration [cluster-config.yml](./k8s/kind/cluster-config.yml) that sets one control-plane and two worker nodes up. It also has mappings to forward ports from the host to an ingress controller running on a node:
   ```shell
   kind create cluster --config=./k8s/kind/cluster-config.yml
   ```
@@ -171,9 +171,11 @@ To launch deployments on Istio, an ingress controller needs to be deployed on cl
 - Apply Nginx ingress controller objects via official Helm chart:
   ```shell
   kubectl create ns ingress-nginx
+  kubectl taint node kind-control-plane node-role.kubernetes.io/control-plane:NoSchedule-
   helm install --namespace ingress-nginx nginx-ingress ingress-nginx \
       --set controller.hostPort.enabled=true \
       --set controller.service.type=NodePort \
+      --set-string controller.nodeSelector.ingress-ready=true \
       --repo https://kubernetes.github.io/ingress-nginx
   ```
 - Validate whether ingress controller is ready to accept requests:
@@ -199,7 +201,7 @@ To test this ingress setup:
   ```
 - Apply sample deployment that comes with Istio installation (2 different versions of helloworld endpoint):
   ```shell
-  kubectl config set-context $(kubectl config current-context) --namespace=testingress
+  kubectl config set-context --current --namespace=testingress
   kubectl apply -f $ISTIO_HOME/samples/helloworld/helloworld-gateway.yaml
   kubectl apply -f $ISTIO_HOME/samples/helloworld/helloworld.yaml
   ```
@@ -219,7 +221,7 @@ To test this ingress setup:
   ```shell
   for i in {0..4}
   do
-    curl -XGET http://localhost/hello
+    curl -XGET http://ui.mapapp.local/hello
   done
   ```
   Output should resemble to:
@@ -235,7 +237,7 @@ To test this ingress setup:
   ```shell
   for i in {0..4}
   do
-    curl --insecure -XGET https://localhost/hello
+    curl --insecure -XGET https://ui.mapapp.local/hello
   done
   ```
   Output should resemble to:
@@ -248,7 +250,7 @@ To test this ingress setup:
   ```
 - It is also possible to verify whether traffic passes through [Envoy](https://www.envoyproxy.io/) sidecar proxy:
   ```shell
-  curl --head -XGET http://localhost/hello
+  curl --head -XGET http://ui.mapapp.local/hello
   ```
   Output should contain [`x-envoy-upstream-service-time`](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#x-envoy-upstream-service-time) header that gives the time in milliseconds spent by the upstream host processing the request and the network latency between Envoy and upstream host:
   ```text
