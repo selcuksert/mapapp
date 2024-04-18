@@ -21,7 +21,7 @@ Add following entries to `hosts`(e.g. /etc/hosts on MacOS) file:
 ```
 
 ### JRE and Maven
-This project requires Java SE 17 installed and registered for [Maven](https://maven.apache.org/). Install Maven and set JAVA_OPTS environment variable with the path of Java 17 installation.
+This project requires Java SE 21 installed and registered for [Maven](https://maven.apache.org/). Install Maven and set JAVA_OPTS environment variable with the path of Java 21 installation.
 
 ### Podman
 As containerization engine [podman](https://podman.io/) is used:
