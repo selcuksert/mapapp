@@ -10,7 +10,7 @@ if ! kubectl get ns $NAMESPACE &>/dev/null; then
   kubectl label namespace $NAMESPACE istio-injection=enabled
 fi
 
-kubectl config set-context "$(kubectl config current-context)" --namespace=$NAMESPACE
+kubectl config set-context --current --namespace=$NAMESPACE
 
 kubectl create secret generic mc-secret --from-env-file="$SCRIPT_PATH"/hazelcast/deploy.env
 

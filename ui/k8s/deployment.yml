@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: ui
-          image: localhost/mapapp/ui:0.2.0
+          image: localhost/mapapp/ui:0.3.0
           resources:
             limits:
               memory: "300M"

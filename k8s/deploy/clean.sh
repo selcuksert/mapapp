@@ -9,8 +9,11 @@ function listImages() {
 
 function deleteImages() {
   for image in $(listImages); do
-    echo "Deleting image from kind: $image"
-    podman exec -it kind-control-plane crictl rmi "$image"
+    echo -e "\n> Deleting image: $image"
+    for node in $(kubectl get nodes -o jsonpath={..metadata.name}); do
+      podman exec -it "$node" crictl rmi "$image"
+    done
+    podman rmi -f "$image"
   done
 }
 
@@ -32,11 +35,11 @@ function deleteKeycloak() {
 
 function deleteServices() {
   for apply_yml in "$SCRIPT_PATH"/../../services/*/k8s/*.yml "$SCRIPT_PATH"/../../ui/k8s/*.yml; do
-    kubectl apply -f "$apply_yml" --all
+    kubectl delete -f "$apply_yml" --all
   done
 }
 
-kubectl config set-context "$(kubectl config current-context)" --namespace=$NAMESPACE
+kubectl config set-context --current --namespace=$NAMESPACE
 
 deleteImages &&
   deleteServices &&

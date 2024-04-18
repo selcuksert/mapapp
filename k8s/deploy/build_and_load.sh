@@ -51,8 +51,11 @@ function loadTok8s() {
     kind load image-archive "$SCRIPT_PATH"/image.tar
     rm "$SCRIPT_PATH"/image.tar
   done
-  echo -e "\n> Loaded images into kind:"
-  podman exec -it kind-worker crictl images | grep mapapp
+
+  for node in $(kubectl get nodes -o jsonpath={..metadata.name}); do
+    echo -e "\n> Loaded images into $node:"
+    podman exec -it "$node" crictl images | grep mapapp
+  done
 }
 
 function run() {
