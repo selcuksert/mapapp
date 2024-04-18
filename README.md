@@ -125,7 +125,7 @@ As service mesh [Istio](https://istio.io/) is used:
   ```shell
   istioctl x precheck
   ```
-  Output should be (for v1.18.2):
+  Output should be (for v1.21.1):
   ```text
   ✔ No issues found when checking the cluster. Istio is safe to install or upgrade!
   To get started, check out https://istio.io/latest/docs/setup/getting-started/
@@ -134,7 +134,7 @@ As service mesh [Istio](https://istio.io/) is used:
   ```shell
   istioctl install --set profile=demo -y
   ```
-  Output should be (for v1.18.2):
+  Output should be (for v1.21.1):
   ```text
   ✔ Istio core installed
   ✔ Istiod installed
